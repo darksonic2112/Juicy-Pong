@@ -4,25 +4,38 @@ using UnityEngine;
 
 public class PaddleMovement : MonoBehaviour
 {
-    
-    public float paddleSpeed = 3f;
+    float moveSpeed = 10f;
+    public string leftPaddleAxis = "Vertical";
+    public string rightPaddleAxis = "Horizontal";
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        // Retrieve horizontal input
-        float horizontalInput = Input.GetAxis("Horizontal");
+        float leftPaddleInput = Input.GetAxis(leftPaddleAxis);
+        MovePaddle(leftPaddleInput, "Paddle (left)");
+        
+        float rightPaddleInput = Input.GetAxis(rightPaddleAxis);
+        MovePaddle(rightPaddleInput, "Paddle (right)");
+    }
 
-        // Calculate movement direction
-        Vector3 moveDirection = Vector3.right * horizontalInput;
-
-        // Move the paddle
-        transform.Translate(moveDirection * paddleSpeed * Time.deltaTime);
+    void MovePaddle(float input, string paddleName)
+    {
+        GameObject paddle = GameObject.Find(paddleName);
+        if ((Input.GetKey(KeyCode.LeftShift) && paddleName == "Paddle (left)") || 
+            (Input.GetKey(KeyCode.RightShift) && paddleName == "Paddle (right)"))
+        {
+            float moveAmount = input * moveSpeed / 2 * Time.deltaTime;
+            if (paddle != null)
+            {
+                paddle.transform.Translate(new Vector3(moveAmount, 0, 0));
+            }
+        }
+        else
+        {
+            float moveAmount = input * moveSpeed * Time.deltaTime;
+            if (paddle != null)
+            {
+                paddle.transform.Translate(new Vector3(moveAmount, 0, 0));
+            }
+        }
     }
 }
