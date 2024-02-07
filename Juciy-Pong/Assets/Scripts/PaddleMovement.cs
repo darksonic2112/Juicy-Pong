@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class PaddleMovement : MonoBehaviour
 {
-    float moveSpeed = 10f;
+    float moveSpeed = 15f;
     public string leftPaddleAxis = "Vertical";
     public string rightPaddleAxis = "Horizontal";
+    public int lowerWallEnd = -9;
+    public int higherWallEnd = 9;
 
     void Update()
     {
@@ -24,7 +26,7 @@ public class PaddleMovement : MonoBehaviour
             (Input.GetKey(KeyCode.RightShift) && paddleName == "Paddle (right)"))
         {
             float moveAmount = input * moveSpeed / 2 * Time.deltaTime;
-            if (paddle != null)
+            if (paddle != null && (paddle.transform.position.x >= lowerWallEnd && paddle.transform.position.x <= higherWallEnd))
             {
                 paddle.transform.Translate(new Vector3(moveAmount, 0, 0));
             }
@@ -32,7 +34,7 @@ public class PaddleMovement : MonoBehaviour
         else
         {
             float moveAmount = input * moveSpeed * Time.deltaTime;
-            if (paddle != null)
+            if (paddle != null && (paddle.transform.position.x >= lowerWallEnd && paddle.transform.position.x <= higherWallEnd))
             {
                 paddle.transform.Translate(new Vector3(moveAmount, 0, 0));
             }
