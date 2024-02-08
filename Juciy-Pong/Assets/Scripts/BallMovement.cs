@@ -30,6 +30,7 @@ public class BallMovement : MonoBehaviour
         UpdateText();
         leftWinnerText.SetActive(false);
         rightWinnerText.SetActive(false);
+        ResetBall(leftPaddle);
     }
     
     void Update()
@@ -75,18 +76,26 @@ public class BallMovement : MonoBehaviour
         {
             GameObject ball = GameObject.Find(ballName);
             GameObject line = GameObject.Find(lineName);
-            line.SetActive(false);
-            ball.SetActive(false);
-            leftWinnerText.SetActive(true);
+            //line.SetActive(false);
+            //ball.SetActive(false);
+            //leftWinnerText.SetActive(true);
+            Debug.Log("Left Paddle won!");
+            scoreLeft = 0;
+            scoreRight = 0;
+            UpdateText();
         }
         
         else if (scoreRight >= 11)
         {
             GameObject ball = GameObject.Find(ballName);
             GameObject line = GameObject.Find(lineName);
-            line.SetActive(false);
-            ball.SetActive(false);
-            rightWinnerText.SetActive(true);
+            //line.SetActive(false);
+            //ball.SetActive(false);
+            //rightWinnerText.SetActive(true);
+            Debug.Log("Right Paddle won!");
+            scoreLeft = 0;
+            scoreRight = 0;
+            UpdateText();
         }
     }
 
