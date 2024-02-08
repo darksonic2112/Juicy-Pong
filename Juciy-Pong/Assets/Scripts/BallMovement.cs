@@ -2,29 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using TMPro;
+using UnityEditor.AnimatedValues;
 
 public class BallMovement : MonoBehaviour
 {
-    public Canvas leftScore;
-    public Canvas rightScore;
+    public TextMeshProUGUI leftScore;
+    public TextMeshProUGUI rightScore;
+    public GameObject leftWinnerText;
+    public GameObject rightWinnerText;
     
     private float ballSpeed_x = 0.02f;
     private float ballSpeed_z = 0.02f;
     private float speedUp = 1f;
-    private string ballName = "Ball"; 
+    private string ballName = "Ball";
+    private string lineName = "Line (1)";
     private GameObject leftPaddle;
     private GameObject rightPaddle;
-    private Vector3 previousPosition;
     private int scoreLeft = 0;
     private int scoreRight = 0;
     void Start()
     {
         leftPaddle = GameObject.Find("Paddle (left)");
         rightPaddle = GameObject.Find("Paddle (right)");
-        previousPosition = transform.position;
+        UpdateText();
+        leftWinnerText.SetActive(false);
+        rightWinnerText.SetActive(false);
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         GameObject ball = GameObject.Find(ballName);
@@ -36,7 +41,7 @@ public class BallMovement : MonoBehaviour
             Goal(rightPaddle);
         }
 
-        if (ball.transform.position.z < -27)
+        else if (ball.transform.position.z < -27)
         {
             Goal(leftPaddle);
         }
@@ -47,18 +52,40 @@ public class BallMovement : MonoBehaviour
         if (paddle == rightPaddle)
         {
             scoreRight += 1;
+            Debug.Log("Right Paddle just scored! The Score now is Left Paddle: " + scoreLeft + " to Right Paddle: " + scoreRight);
+            UpdateText();
             ResetBall(leftPaddle);
+            CheckWinner();
         }
         else if (paddle == leftPaddle)
         {
             scoreLeft += 1;
+            Debug.Log("Left Paddle just scored! The Score now is Left Paddle: " + scoreLeft + " to Right Paddle: " + scoreRight);
+            UpdateText();
             ResetBall(rightPaddle);
+            CheckWinner();
         }
     }
 
-    void Counter()
+    void CheckWinner()
     {
+        if (scoreLeft >= 11)
+        {
+            GameObject ball = GameObject.Find(ballName);
+            GameObject line = GameObject.Find(lineName);
+            line.SetActive(false);
+            ball.SetActive(false);
+            leftWinnerText.SetActive(true);
+        }
         
+        else if (scoreRight >= 11)
+        {
+            GameObject ball = GameObject.Find(ballName);
+            GameObject line = GameObject.Find(lineName);
+            line.SetActive(false);
+            ball.SetActive(false);
+            rightWinnerText.SetActive(true);
+        }
     }
 
     void ResetBall(GameObject serve)
@@ -66,20 +93,18 @@ public class BallMovement : MonoBehaviour
         speedUp = 1f;
         GameObject ball = GameObject.Find(ballName);
         float randomFloat_x = Random.Range(0.004f, 0.006f);
-    
+        
         ball.transform.position = Vector3.zero;
         ballSpeed_z = 0.02f;
-    
+        
         if (serve == rightPaddle)
         {
             ballSpeed_z = -Mathf.Abs(ballSpeed_z);
             ballSpeed_x = randomFloat_x;
-            ball.transform.position = rightPaddle.transform.position;
         }
         else if (serve == leftPaddle)
         {
             ballSpeed_x *= randomFloat_x;
-            ball.transform.position = leftPaddle.transform.position;
         }
     }
 
@@ -94,7 +119,7 @@ public class BallMovement : MonoBehaviour
 
         if (collision.gameObject.tag == "WallSurface")
         {
-            ballSpeed_x *= -1.01f;
+            ballSpeed_x *= -1.2f;
         }
         
         if (collision.gameObject == leftPaddle)
@@ -108,9 +133,10 @@ public class BallMovement : MonoBehaviour
         }
     }
     
-    void BallSpeed()
+    void UpdateText()
     {
-        
+        leftScore.text = "Score: " + scoreLeft.ToString();
+        rightScore.text = "Score: " + scoreRight.ToString();
     }
 
     void ReflectBallDirection(GameObject paddle)
