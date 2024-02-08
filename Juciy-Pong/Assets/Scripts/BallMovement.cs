@@ -31,26 +31,28 @@ public class BallMovement : MonoBehaviour
         ball.transform.Translate(new Vector3(ballSpeed_x * speedUp, 0, ballSpeed_z * speedUp));
         Vector3 currentPosition = transform.position;
         
-        if (ball.transform.position.z < 27)
+        if (ball.transform.position.z > 27)
         {
-            Goal("Paddle (right)");
+            Goal(rightPaddle);
         }
 
-        if (ball.transform.position.z > -27)
+        if (ball.transform.position.z < -27)
         {
-            Goal("Paddle (left)");
+            Goal(leftPaddle);
         }
     }
 
-    void Goal(string paddle)
+    void Goal(GameObject paddle)
     {
-        if (paddle == "Paddle (right)")
+        if (paddle == rightPaddle)
         {
             scoreRight += 1;
+            ResetBall(leftPaddle);
         }
-        else if (paddle == "Paddle (left)")
+        else if (paddle == leftPaddle)
         {
             scoreLeft += 1;
+            ResetBall(rightPaddle);
         }
     }
 
@@ -59,15 +61,28 @@ public class BallMovement : MonoBehaviour
         
     }
 
-    void ResetBall()
+    void ResetBall(GameObject serve)
     {
         speedUp = 1f;
         GameObject ball = GameObject.Find(ballName);
-        float randomFloat_x = Random.Range(0f, 1f);
-        float randomFloat_y = Random.Range(0f, 1f);
-        ball.transform.Translate(new Vector3(0, 0, 0));
-        ball.transform.Translate(new Vector3(ballSpeed_x * speedUp, 0, ballSpeed_z * speedUp));
+        float randomFloat_x = Random.Range(0.004f, 0.006f);
+    
+        ball.transform.position = Vector3.zero;
+        ballSpeed_z = 0.02f;
+    
+        if (serve == rightPaddle)
+        {
+            ballSpeed_z = -Mathf.Abs(ballSpeed_z);
+            ballSpeed_x = randomFloat_x;
+            ball.transform.position = rightPaddle.transform.position;
+        }
+        else if (serve == leftPaddle)
+        {
+            ballSpeed_x *= randomFloat_x;
+            ball.transform.position = leftPaddle.transform.position;
+        }
     }
+
     
     void OnCollisionEnter(Collision collision)
     {
@@ -118,10 +133,18 @@ public class BallMovement : MonoBehaviour
         {
             ballSpeed_z = -Mathf.Abs(ballSpeed_z);
         }
-        
-        if (ball.transform.position.x > paddle.transform.position.x)
+
+        if (Mathf.Abs(ballSpeed_x) < 0.1 && ball.transform.position.x > paddle.transform.position.x)
+        {
+            ballSpeed_x = 0.02f;
+        }
+        else if (ball.transform.position.x > paddle.transform.position.x)
         {
             ballSpeed_x = Mathf.Abs(ballSpeed_x);
+        }
+        else if (Mathf.Abs(ballSpeed_x) < 0.1 && ball.transform.position.x < paddle.transform.position.x)
+        {
+            ballSpeed_x = -0.02f;
         }
         else
         {
