@@ -12,6 +12,8 @@ public class BallMovement : MonoBehaviour
     public GameObject leftWinnerText;
     public GameObject rightWinnerText;
     
+    public Material BlueMaterial;
+    
     private float ballSpeed_x = 0.02f;
     private float ballSpeed_z = 0.02f;
     private float speedUp = 1f;
@@ -115,11 +117,13 @@ public class BallMovement : MonoBehaviour
         {
             ballSpeed_z *= -1f;
             speedUp += 0.1f;
+            Camera.main.GetComponent<CameraShake>().Shake();
         }
 
         if (collision.gameObject.tag == "WallSurface")
         {
             ballSpeed_x *= -1.2f;
+            Camera.main.GetComponent<CameraShake>().Shake();
         }
         
         if (collision.gameObject == leftPaddle)

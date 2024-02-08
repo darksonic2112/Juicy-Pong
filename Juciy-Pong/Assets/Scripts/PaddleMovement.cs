@@ -7,8 +7,8 @@ public class PaddleMovement : MonoBehaviour
     float moveSpeed = 15f;
     public string leftPaddleAxis = "Vertical";
     public string rightPaddleAxis = "Horizontal";
-    public int lowerWallEnd = -9;
-    public int higherWallEnd = 9;
+    public float lowerWallEnd = -9.4f;
+    public float higherWallEnd = 9.4f;
 
     void Update()
     {
@@ -38,6 +38,27 @@ public class PaddleMovement : MonoBehaviour
             {
                 paddle.transform.Translate(new Vector3(moveAmount, 0, 0));
             }
+        }
+
+        if (paddle != null && paddle.transform.position.x <= lowerWallEnd)
+        {
+            paddle.transform.Translate(new Vector3(higherWallEnd - 1, 0, 0));
+        }
+        else if (paddle != null && paddle.transform.position.x >= higherWallEnd)
+        {
+            paddle.transform.Translate(new Vector3(lowerWallEnd + 1, 0, 0));
+        }
+
+        if ((Input.GetKey(KeyCode.A) && paddleName == "Paddle (left)") ||
+            (Input.GetKey(KeyCode.LeftArrow) && paddleName == "Paddle (right)"))
+        {
+            paddle.transform.localScale += new Vector3(0.001f, 0, 0.001f);
+        }
+
+        if ((Input.GetKey(KeyCode.D) && paddleName == "Paddle (left)") ||
+            (Input.GetKey(KeyCode.RightArrow) && paddleName == "Paddle (right)"))
+        {
+            paddle.transform.localScale -= new Vector3(0.001f, 0, 0.001f);
         }
     }
 }
