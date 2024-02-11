@@ -137,7 +137,7 @@ public class BallMovement : MonoBehaviour
 
         if (collision.gameObject.tag == "WallSurface")
         {
-            ballSpeed_x *= -1.2f;
+            ballSpeed_x *= -1f;
             Camera.main.GetComponent<CameraShake>().Shake();
         }
         
@@ -162,38 +162,39 @@ public class BallMovement : MonoBehaviour
     {
         GameObject ball = GameObject.Find(ballName);
 
-        float paddleHeight = paddle.transform.localScale.y;
-        float upperHalfHeight = paddleHeight / 2.0f;
-        float lowerHalfHeight = paddleHeight / 2.0f;
+        // Get the center position of the paddle
+        Vector3 paddleCenter = paddle.transform.position;
     
-        Vector3 upperHalfPosition = paddle.transform.position + Vector3.up * upperHalfHeight;
-        Vector3 lowerHalfPosition = paddle.transform.position - Vector3.up * lowerHalfHeight;
-        
-        if (ball.transform.position.y > upperHalfPosition.y)
-        {
-            ballSpeed_z = Mathf.Abs(ballSpeed_z);
-        }
-        
-        else if (ball.transform.position.y < lowerHalfPosition.y)
-        {
-            ballSpeed_z = -Mathf.Abs(ballSpeed_z);
-        }
+        // Calculate the direction from the paddle's center to the ball's position
+        Vector3 reflectionDirection = ball.transform.position - paddleCenter;
+    
+        // Normalize the reflection direction
+        reflectionDirection.Normalize();
 
-        if (Mathf.Abs(ballSpeed_x) < 0.1 && ball.transform.position.x > paddle.transform.position.x)
+        // Adjust the reflection direction based on the incoming angle
+        float angle = Vector3.Angle(reflectionDirection, Vector3.right);
+        float cappedAngle = Mathf.Clamp(angle, -60f, 60f);
+        float ballSpeedMagnitude = Mathf.Sqrt(ballSpeed_x * ballSpeed_x + ballSpeed_z * ballSpeed_z);
+        float newAngle = Mathf.Lerp(-60f, 60f, cappedAngle / 45); // Adjust the range of the new angle as needed
+    
+        // Calculate the new velocity components based on the new angle
+        ballSpeed_x = Mathf.Cos(Mathf.Deg2Rad * newAngle) * ballSpeedMagnitude;
+        ballSpeed_z = Mathf.Sin(Mathf.Deg2Rad * newAngle) * ballSpeedMagnitude;
+
+        // Adjust the reflection direction based on the paddle's position
+        if (ball.transform.position.y > paddle.transform.position.y)
         {
-            ballSpeed_x = 0.02f;
-        }
-        else if (ball.transform.position.x > paddle.transform.position.x)
-        {
-            ballSpeed_x = Mathf.Abs(ballSpeed_x);
-        }
-        else if (Mathf.Abs(ballSpeed_x) < 0.1 && ball.transform.position.x < paddle.transform.position.x)
-        {
-            ballSpeed_x = -0.02f;
+            // Ball hits upper half of the paddle
+            reflectionDirection.y = Mathf.Abs(reflectionDirection.y);
         }
         else
         {
-            ballSpeed_x = -Mathf.Abs(ballSpeed_x);
+            // Ball hits lower half of the paddle
+            reflectionDirection.y = -Mathf.Abs(reflectionDirection.y);
         }
+
+        // Set the new ball velocity based on the reflection direction
+        ballSpeed_x = reflectionDirection.x * ballSpeedMagnitude;
+        ballSpeed_z = reflectionDirection.z * ballSpeedMagnitude;
     }
 }
