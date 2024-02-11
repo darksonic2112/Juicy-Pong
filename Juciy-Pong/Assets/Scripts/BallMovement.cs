@@ -103,7 +103,7 @@ public class BallMovement : MonoBehaviour
     void ResetBall(GameObject serve)
     {
         speedUp = 1f;
-        musicSpeed.OnSpeedSliderValueChanged(speedUp/5);
+        musicSpeed.OnSpeedSliderValueChanged(speedUp);
         GameObject ball = GameObject.Find(ballName);
         float randomFloat_x = Random.Range(0.004f, 0.006f);
         
@@ -127,8 +127,8 @@ public class BallMovement : MonoBehaviour
         if (collision.gameObject.tag == "Surface")
         {
             ballSpeed_z *= -1f;
-            speedUp += 0.1f;
-            musicSpeed.OnSpeedSliderValueChanged(speedUp/10);
+            speedUp += 0.05f;
+            musicSpeed.OnSpeedSliderValueChanged(speedUp);
             Camera.main.GetComponent<CameraShake>().Shake();
         }
 
