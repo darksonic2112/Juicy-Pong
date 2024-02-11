@@ -1,26 +1,32 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BallSound : MonoBehaviour
 {
     public AudioClip paddleSound;
     public AudioClip wallSound;
-
-    private AudioSource audioSource;
+    public AudioSource mainThemeAudioSource;
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        mainThemeAudioSource.pitch = 1f;
     }
 
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Surface")
         {
-            audioSource.PlayOneShot(paddleSound);
+            AudioSource.PlayClipAtPoint(paddleSound, transform.position);
+            
         }
         else if (collision.gameObject.tag == "WallSurface")
         {
-            audioSource.PlayOneShot(wallSound);
+            AudioSource.PlayClipAtPoint(wallSound, transform.position);
         }
+    }
+    
+    public void OnSpeedSliderValueChanged(float value)
+    {
+        mainThemeAudioSource.pitch = value;
     }
 }

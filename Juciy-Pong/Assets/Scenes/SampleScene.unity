@@ -1677,6 +1677,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paddleSound: {fileID: 8300000, guid: 66587503810c4e348845c64fd8021ae2, type: 3}
   wallSound: {fileID: 8300000, guid: d7d4e17cc6489504385c6e0093cad294, type: 3}
+  mainThemeAudioSource: {fileID: 1984546171}
 --- !u!82 &1984546171
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1687,9 +1688,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 1
+  m_audioClip: {fileID: 8300000, guid: 06ac94dd98d56f947a73214d1933fdfd, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.029
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1789,6 +1790,7 @@ MonoBehaviour:
   rightScore: {fileID: 2096965955}
   leftWinnerText: {fileID: 1265757253}
   rightWinnerText: {fileID: 428429476}
+  musicSpeed: {fileID: 1984546170}
   BlueMaterial: {fileID: 0}
 --- !u!114 &2096965955 stripped
 MonoBehaviour:

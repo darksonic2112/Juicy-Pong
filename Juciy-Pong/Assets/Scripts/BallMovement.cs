@@ -11,7 +11,7 @@ public class BallMovement : MonoBehaviour
     public TextMeshProUGUI rightScore;
     public GameObject leftWinnerText;
     public GameObject rightWinnerText;
-    
+    public BallSound musicSpeed;
     public Material BlueMaterial;
     
     private float ballSpeed_x = 0.02f;
@@ -31,6 +31,7 @@ public class BallMovement : MonoBehaviour
         leftWinnerText.SetActive(false);
         rightWinnerText.SetActive(false);
         ResetBall(leftPaddle);
+        musicSpeed.OnSpeedSliderValueChanged(speedUp);
     }
     
     void Update()
@@ -102,6 +103,7 @@ public class BallMovement : MonoBehaviour
     void ResetBall(GameObject serve)
     {
         speedUp = 1f;
+        musicSpeed.OnSpeedSliderValueChanged(speedUp/5);
         GameObject ball = GameObject.Find(ballName);
         float randomFloat_x = Random.Range(0.004f, 0.006f);
         
@@ -111,7 +113,7 @@ public class BallMovement : MonoBehaviour
         if (serve == rightPaddle)
         {
             ballSpeed_z = -Mathf.Abs(ballSpeed_z);
-            ballSpeed_x = randomFloat_x;
+            ballSpeed_x *= randomFloat_x;
         }
         else if (serve == leftPaddle)
         {
@@ -126,6 +128,7 @@ public class BallMovement : MonoBehaviour
         {
             ballSpeed_z *= -1f;
             speedUp += 0.1f;
+            musicSpeed.OnSpeedSliderValueChanged(speedUp/10);
             Camera.main.GetComponent<CameraShake>().Shake();
         }
 
