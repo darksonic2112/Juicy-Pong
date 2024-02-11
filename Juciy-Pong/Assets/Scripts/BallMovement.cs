@@ -102,8 +102,11 @@ public class BallMovement : MonoBehaviour
 
     void ResetBall(GameObject serve)
     {
+        if (speedUp > 1f)
+        {   
+            musicSpeed.SmoothPitchChange(speedUp);
+        }
         speedUp = 1f;
-        musicSpeed.OnSpeedSliderValueChanged(speedUp);
         GameObject ball = GameObject.Find(ballName);
         float randomFloat_x = Random.Range(0.004f, 0.006f);
         

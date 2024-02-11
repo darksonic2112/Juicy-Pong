@@ -7,6 +7,8 @@ public class BallSound : MonoBehaviour
     public AudioClip wallSound;
     public AudioSource mainThemeAudioSource;
 
+    private float offset = 0f;
+
     void Start()
     {
         mainThemeAudioSource.pitch = 1f;
@@ -28,5 +30,15 @@ public class BallSound : MonoBehaviour
     public void OnSpeedSliderValueChanged(float value)
     {
         mainThemeAudioSource.pitch = value;
+    }
+
+    public void SmoothPitchChange(float value)
+    {
+        offset = (value - 1f) / 10;
+        while (mainThemeAudioSource.pitch > 1f)
+        {
+            mainThemeAudioSource.pitch -= offset;
+            System.Threading.Thread.Sleep(25);
+        }
     }
 }
