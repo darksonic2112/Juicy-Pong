@@ -77,7 +77,7 @@ public class PaddleMovement : MonoBehaviour
         GameObject paddleLeft = GameObject.Find("Paddle (left)");
         GameObject paddleRight = GameObject.Find("Paddle (right)");
         float ballDirectionZ = movement.GetBallSpeedZ();
-        if (ballDirectionZ > 0)
+        if (ballDirectionZ < 0)
         {
             paddleLeft.transform.localScale = new Vector3(5f + amount, 1f, 1f);
             paddleRight.transform.localScale = new Vector3(5f - amount, 1f, 1f);
