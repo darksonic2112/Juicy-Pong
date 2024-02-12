@@ -356,6 +356,7 @@
 "Assets/Scripts/BallSound.cs"
 "Assets/Scripts/CameraShake.cs"
 "Assets/Scripts/PaddleMovement.cs"
+"Assets/Scripts/TextChanges.cs"
 -langversion:9.0
 
 /deterministic

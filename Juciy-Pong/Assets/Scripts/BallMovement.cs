@@ -27,7 +27,7 @@ public class BallMovement : MonoBehaviour
     {
         leftPaddle = GameObject.Find("Paddle (left)");
         rightPaddle = GameObject.Find("Paddle (right)");
-        UpdateText();
+        UpdateText(scoreLeft, scoreRight);
         leftWinnerText.SetActive(false);
         rightWinnerText.SetActive(false);
         ResetBall(leftPaddle);
@@ -57,7 +57,7 @@ public class BallMovement : MonoBehaviour
         {
             scoreRight += 1;
             Debug.Log("Right Paddle just scored! The Score now is Left Paddle: " + scoreLeft + " to Right Paddle: " + scoreRight);
-            UpdateText();
+            UpdateText(scoreLeft, scoreRight);
             ResetBall(leftPaddle);
             CheckWinner();
         }
@@ -65,7 +65,7 @@ public class BallMovement : MonoBehaviour
         {
             scoreLeft += 1;
             Debug.Log("Left Paddle just scored! The Score now is Left Paddle: " + scoreLeft + " to Right Paddle: " + scoreRight);
-            UpdateText();
+            UpdateText(scoreLeft, scoreRight);
             ResetBall(rightPaddle);
             CheckWinner();
         }
@@ -83,7 +83,7 @@ public class BallMovement : MonoBehaviour
             Debug.Log("Left Paddle won!");
             scoreLeft = 0;
             scoreRight = 0;
-            UpdateText();
+            UpdateText(scoreLeft, scoreRight);
         }
         
         else if (scoreRight >= 11)
@@ -96,7 +96,7 @@ public class BallMovement : MonoBehaviour
             Debug.Log("Right Paddle won!");
             scoreLeft = 0;
             scoreRight = 0;
-            UpdateText();
+            UpdateText(scoreLeft, scoreRight);
         }
     }
 
@@ -152,8 +152,32 @@ public class BallMovement : MonoBehaviour
         }
     }
     
-    void UpdateText()
+    void UpdateText(float currentScoreLeft, float currentScoreRight)
     {
+        if (currentScoreLeft == currentScoreRight)
+        {
+            Color textColorL = Color.white;
+            Color textColorR = Color.white;
+            leftScore.color = textColorL;
+            rightScore.color = textColorR;
+        }
+        else if (currentScoreLeft > currentScoreRight)
+        {
+            float difference = currentScoreLeft - currentScoreRight;
+            Color textColorL = new Color(0f, 0.78f + (difference / 50), 0f);
+            Color textColorR = new Color(0.78f + (difference / 50), 0f, 0f);
+            leftScore.color = textColorL;
+            rightScore.color = textColorR;
+        }
+        else
+        {
+                float difference = currentScoreRight - currentScoreLeft;
+                Color textColorL = new Color(0.78f + (difference / 50), 0f, 0f);
+                Color textColorR = new Color(0f, 0.78f + (difference / 50), 0f);
+                leftScore.color = textColorL;
+                rightScore.color = textColorR;
+        }
+        
         leftScore.text = "Score: " + scoreLeft.ToString();
         rightScore.text = "Score: " + scoreRight.ToString();
     }
