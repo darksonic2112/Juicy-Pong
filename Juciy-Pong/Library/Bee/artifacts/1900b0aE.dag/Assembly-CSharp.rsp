@@ -355,6 +355,7 @@
 "Assets/Scripts/BallMovement.cs"
 "Assets/Scripts/BallSound.cs"
 "Assets/Scripts/CameraShake.cs"
+"Assets/Scripts/PaddleEnlarger.cs"
 "Assets/Scripts/PaddleMovement.cs"
 "Assets/Scripts/TextChanges.cs"
 -langversion:9.0

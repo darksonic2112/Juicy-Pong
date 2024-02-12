@@ -12,7 +12,6 @@ public class BallMovement : MonoBehaviour
     public GameObject leftWinnerText;
     public GameObject rightWinnerText;
     public BallSound musicSpeed;
-    public Material BlueMaterial;
     
     private float ballSpeed_x = 0.02f;
     private float ballSpeed_z = 0.02f;
@@ -124,6 +123,10 @@ public class BallMovement : MonoBehaviour
         }
     }
 
+    public float GetBallSpeedZ()
+    {
+        return ballSpeed_z;
+    }
     
     void OnCollisionEnter(Collision collision)
     {
@@ -143,12 +146,12 @@ public class BallMovement : MonoBehaviour
         
         if (collision.gameObject == leftPaddle)
         {
-            ReflectBallDirection(leftPaddle);
+            //ReflectBallDirection(leftPaddle);
         }
         
         if (collision.gameObject == rightPaddle)
         {
-            ReflectBallDirection(rightPaddle);
+           //ReflectBallDirection(rightPaddle);
         }
     }
     
@@ -181,7 +184,7 @@ public class BallMovement : MonoBehaviour
         leftScore.text = "Score: " + scoreLeft.ToString();
         rightScore.text = "Score: " + scoreRight.ToString();
     }
-
+/*
     void ReflectBallDirection(GameObject paddle)
     {
         GameObject ball = GameObject.Find(ballName);
@@ -221,4 +224,5 @@ public class BallMovement : MonoBehaviour
         ballSpeed_x = reflectionDirection.x * ballSpeedMagnitude;
         ballSpeed_z = reflectionDirection.z * ballSpeedMagnitude;
     }
+    */
 }
