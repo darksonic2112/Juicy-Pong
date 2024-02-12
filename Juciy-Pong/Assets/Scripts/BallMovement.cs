@@ -63,6 +63,8 @@ public class BallMovement : MonoBehaviour
             ResetBall(leftPaddle);
             paddleLeft.RevertPaddleSize();
             paddleRight.RevertPaddleSize();
+            paddleLeft.RevertPaddleSpeed();
+            paddleRight.RevertPaddleSpeed();
             CheckWinner();
         }
         else if (paddle == leftPaddle)
@@ -73,6 +75,8 @@ public class BallMovement : MonoBehaviour
             ResetBall(rightPaddle);
             paddleLeft.RevertPaddleSize();
             paddleRight.RevertPaddleSize();
+            paddleLeft.RevertPaddleSpeed();
+            paddleRight.RevertPaddleSpeed();
             CheckWinner();
         }
     }
