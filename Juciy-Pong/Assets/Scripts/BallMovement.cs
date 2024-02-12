@@ -12,6 +12,9 @@ public class BallMovement : MonoBehaviour
     public GameObject leftWinnerText;
     public GameObject rightWinnerText;
     public BallSound musicSpeed;
+    public PaddleMovement paddleLeft;
+    public PaddleMovement paddleRight;
+    
     
     private float ballSpeed_x = 0.02f;
     private float ballSpeed_z = 0.02f;
@@ -58,6 +61,8 @@ public class BallMovement : MonoBehaviour
             Debug.Log("Right Paddle just scored! The Score now is Left Paddle: " + scoreLeft + " to Right Paddle: " + scoreRight);
             UpdateText(scoreLeft, scoreRight);
             ResetBall(leftPaddle);
+            paddleLeft.RevertPaddleSize();
+            paddleRight.RevertPaddleSize();
             CheckWinner();
         }
         else if (paddle == leftPaddle)
@@ -66,6 +71,8 @@ public class BallMovement : MonoBehaviour
             Debug.Log("Left Paddle just scored! The Score now is Left Paddle: " + scoreLeft + " to Right Paddle: " + scoreRight);
             UpdateText(scoreLeft, scoreRight);
             ResetBall(rightPaddle);
+            paddleLeft.RevertPaddleSize();
+            paddleRight.RevertPaddleSize();
             CheckWinner();
         }
     }

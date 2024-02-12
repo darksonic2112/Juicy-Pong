@@ -1941,6 +1941,8 @@ MonoBehaviour:
   leftWinnerText: {fileID: 1265757253}
   rightWinnerText: {fileID: 428429476}
   musicSpeed: {fileID: 1984546170}
+  paddleLeft: {fileID: 35916486}
+  paddleRight: {fileID: 820070711}
 --- !u!114 &2096965955 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5040197601130346152, guid: 80c484dd0d949fc4fa6d312f40db4470, type: 3}

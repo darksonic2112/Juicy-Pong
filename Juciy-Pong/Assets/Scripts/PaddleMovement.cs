@@ -80,12 +80,20 @@ public class PaddleMovement : MonoBehaviour
         if (ballDirectionZ > 0)
         {
             paddleLeft.transform.localScale = new Vector3(5f + amount, 1f, 1f);
-            //paddleRight.transform.localScale = new Vector3(5f - amount, 1f, 1f);
+            paddleRight.transform.localScale = new Vector3(5f - amount, 1f, 1f);
         }
         else
         {
-            //paddleLeft.transform.localScale = new Vector3(5f - amount, 1f, 1f);
+            paddleLeft.transform.localScale = new Vector3(5f - amount, 1f, 1f);
             paddleRight.transform.localScale = new Vector3(5f + amount, 1f, 1f);
         }
+    }
+
+    public void RevertPaddleSize()
+    {
+        GameObject paddleLeft = GameObject.Find("Paddle (left)");
+        GameObject paddleRight = GameObject.Find("Paddle (right)");
+        paddleLeft.transform.localScale = new Vector3(5f, 1f, 1f);
+        paddleRight.transform.localScale = new Vector3(5f, 1f, 1f);
     }
 }
