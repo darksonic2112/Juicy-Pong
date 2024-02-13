@@ -14,6 +14,11 @@ public class PaddleMovement : MonoBehaviour
     public BallMovement movement;
     public bool debuffLeft = false;
     public bool debuffRight = false;
+    
+    private Vector3 originalPositionLeft;
+    private Quaternion originalRotationLeft;
+    private Vector3 originalPositionRight;
+    private Quaternion originalRotationRight;
 
     private void Start()
     {
@@ -21,8 +26,14 @@ public class PaddleMovement : MonoBehaviour
         GameObject paddleRight = GameObject.Find("Paddle (right)");
         paddleLeft.transform.localScale = new Vector3(5f, 1f, 1f);
         paddleRight.transform.localScale = new Vector3(5f, 1f, 1f);
-    }
 
+        originalPositionLeft = paddleLeft.transform.position;
+        originalRotationLeft = paddleLeft.transform.rotation;
+
+        originalPositionRight = paddleRight.transform.position;
+        originalRotationRight = paddleRight.transform.rotation;
+    }
+        
     void Update()
     {
         float leftPaddleInput = Input.GetAxis(leftPaddleAxis);
@@ -60,25 +71,34 @@ public class PaddleMovement : MonoBehaviour
             }
         }
 
-        if (paddle != null && paddle.transform.position.x <= lowerWallEnd)
+        if (paddle != null && (paddle.transform.position.x <= lowerWallEnd))
         {
+            Debug.Log("Resetting paddle - lower or right boundary reached");
+            Debug.Log("Paddle position: " + paddle.transform.position);
             paddle.transform.Translate(new Vector3(higherWallEnd - 1, 0, 0));
+            paddle.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
-        else if (paddle != null && paddle.transform.position.x >= higherWallEnd)
+
+        if (paddle != null && (paddle.transform.position.x >= higherWallEnd))
         {
+            Debug.Log("Resetting paddle - upper or left boundary reached");
+            Debug.Log("Paddle position: " + paddle.transform.position);
             paddle.transform.Translate(new Vector3(lowerWallEnd + 1, 0, 0));
+            paddle.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
+
+
         
         if ((paddleName == "Paddle (left)" && Input.GetKey(KeyCode.D)) || paddleName == "Paddle (right)" && Input.GetKey(KeyCode.RightArrow))
         {
             Quaternion currentRotation = paddle.transform.rotation;
-            float rotationAmount = 0.01f;
+            float rotationAmount = 0.1f;
             paddle.transform.rotation = currentRotation * Quaternion.Euler(0f, rotationAmount, 0f);
         }
         if ((paddleName == "Paddle (left)" && Input.GetKey(KeyCode.A)) || paddleName == "Paddle (right)" && Input.GetKey(KeyCode.LeftArrow))
         {
             Quaternion currentRotation = paddle.transform.rotation;
-            float rotationAmount = -0.01f;
+            float rotationAmount = -0.1f;
             paddle.transform.rotation = currentRotation * Quaternion.Euler(0f, rotationAmount, 0f);
         }
     }
@@ -119,6 +139,18 @@ public class PaddleMovement : MonoBehaviour
         GameObject paddleRight = GameObject.Find("Paddle (right)");
         paddleLeft.transform.localScale = new Vector3(5f, 1f, 1f);
         paddleRight.transform.localScale = new Vector3(5f, 1f, 1f);
+    }
+
+    public void RevertPaddlePosition()
+    {
+        GameObject paddleLeft = GameObject.Find("Paddle (left)");
+        GameObject paddleRight = GameObject.Find("Paddle (right)");
+        
+        paddleLeft.transform.position = originalPositionLeft;
+        paddleLeft.transform.rotation = originalRotationLeft;
+
+        paddleRight.transform.position = originalPositionRight;
+        paddleRight.transform.rotation = originalRotationRight;
     }
 
     public void RevertPaddleSpeed()

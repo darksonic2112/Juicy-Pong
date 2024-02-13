@@ -65,6 +65,8 @@ public class BallMovement : MonoBehaviour
             paddleRight.RevertPaddleSize();
             paddleLeft.RevertPaddleSpeed();
             paddleRight.RevertPaddleSpeed();
+            paddleLeft.RevertPaddlePosition();
+            paddleRight.RevertPaddlePosition();
             CheckWinner();
         }
         else if (paddle == leftPaddle)
@@ -77,6 +79,8 @@ public class BallMovement : MonoBehaviour
             paddleRight.RevertPaddleSize();
             paddleLeft.RevertPaddleSpeed();
             paddleRight.RevertPaddleSpeed();
+            paddleLeft.RevertPaddlePosition();
+            paddleRight.RevertPaddlePosition();
             CheckWinner();
         }
     }
@@ -87,10 +91,9 @@ public class BallMovement : MonoBehaviour
         {
             GameObject ball = GameObject.Find(ballName);
             GameObject line = GameObject.Find(lineName);
-            //line.SetActive(false);
-            //ball.SetActive(false);
-            //leftWinnerText.SetActive(true);
+            leftWinnerText.SetActive(true);
             Debug.Log("Left Paddle won!");
+            StartCoroutine(DeactivateLeftWinnerText());
             scoreLeft = 0;
             scoreRight = 0;
             UpdateText(scoreLeft, scoreRight);
@@ -100,15 +103,25 @@ public class BallMovement : MonoBehaviour
         {
             GameObject ball = GameObject.Find(ballName);
             GameObject line = GameObject.Find(lineName);
-            //line.SetActive(false);
-            //ball.SetActive(false);
-            //rightWinnerText.SetActive(true);
+            rightWinnerText.SetActive(true);
             Debug.Log("Right Paddle won!");
+            StartCoroutine(DeactivateLeftWinnerText());
             scoreLeft = 0;
             scoreRight = 0;
             UpdateText(scoreLeft, scoreRight);
         }
     }
+    IEnumerator DeactivateLeftWinnerText()
+    {
+        yield return new WaitForSeconds(3f);
+
+        leftWinnerText.SetActive(false);
+        rightWinnerText.SetActive(false);
+        
+        GameObject ball = GameObject.Find(ballName);
+        GameObject line = GameObject.Find(lineName);
+    }
+
 
     void ResetBall(GameObject serve)
     {
@@ -157,12 +170,12 @@ public class BallMovement : MonoBehaviour
         
         if (collision.gameObject == leftPaddle)
         {
-            //ReflectBallDirection(leftPaddle);
+            ReflectBallDirection(leftPaddle);
         }
         
         if (collision.gameObject == rightPaddle)
         {
-           //ReflectBallDirection(rightPaddle);
+           ReflectBallDirection(rightPaddle);
         }
     }
     
