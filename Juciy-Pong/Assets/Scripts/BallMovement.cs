@@ -195,7 +195,7 @@ public class BallMovement : MonoBehaviour
         leftScore.text = "Score: " + scoreLeft.ToString();
         rightScore.text = "Score: " + scoreRight.ToString();
     }
-/*
+
     void ReflectBallDirection(GameObject paddle)
     {
         GameObject ball = GameObject.Find(ballName);
@@ -235,5 +235,5 @@ public class BallMovement : MonoBehaviour
         ballSpeed_x = reflectionDirection.x * ballSpeedMagnitude;
         ballSpeed_z = reflectionDirection.z * ballSpeedMagnitude;
     }
-    */
+
 }

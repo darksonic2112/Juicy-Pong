@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PaddleMovement : MonoBehaviour
 {
@@ -67,6 +68,19 @@ public class PaddleMovement : MonoBehaviour
         {
             paddle.transform.Translate(new Vector3(lowerWallEnd + 1, 0, 0));
         }
+        
+        if ((paddleName == "Paddle (left)" && Input.GetKey(KeyCode.D)) || paddleName == "Paddle (right)" && Input.GetKey(KeyCode.RightArrow))
+        {
+            Quaternion currentRotation = paddle.transform.rotation;
+            float rotationAmount = 0.01f;
+            paddle.transform.rotation = currentRotation * Quaternion.Euler(0f, rotationAmount, 0f);
+        }
+        if ((paddleName == "Paddle (left)" && Input.GetKey(KeyCode.A)) || paddleName == "Paddle (right)" && Input.GetKey(KeyCode.LeftArrow))
+        {
+            Quaternion currentRotation = paddle.transform.rotation;
+            float rotationAmount = -0.01f;
+            paddle.transform.rotation = currentRotation * Quaternion.Euler(0f, rotationAmount, 0f);
+        }
     }
 
     public void ChangePaddleSize(float amount)
@@ -112,4 +126,5 @@ public class PaddleMovement : MonoBehaviour
         debuffLeft = false;
         debuffRight = false;
     }
+    
 }
