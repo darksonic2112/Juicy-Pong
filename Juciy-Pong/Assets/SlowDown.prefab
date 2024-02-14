@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1041053837466807309}
   - component: {fileID: 644633698396503901}
   - component: {fileID: 8161824086151917986}
-  - component: {fileID: 5166717046302606331}
   - component: {fileID: 2467321981333051201}
   m_Layer: 0
   m_Name: SlowDown
@@ -107,21 +106,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5166717046302606331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2464964853197657019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae4430f11c1e72f4398f8eef6b25a3d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  paddleLeft: {fileID: 0}
-  paddleRight: {fileID: 0}
-  powerUpPrefab: {fileID: 2736717401378178076, guid: 59089388274850947939611ffa9e36cb, type: 3}
 --- !u!54 &2467321981333051201
 Rigidbody:
   m_ObjectHideFlags: 0
